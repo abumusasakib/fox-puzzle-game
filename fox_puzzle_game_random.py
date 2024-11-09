@@ -8,10 +8,12 @@ tile_sequence = []  # will store the shuffled sequence
 grid_size = 4
 grid = [['' for _ in range(grid_size)] for _ in range(grid_size)]
 current_position = 0  # Start at the top-left corner
+attempt_count = 0  # Track the number of attempts
 
 # Function to shuffle tiles and start a new game
 def shuffle_tiles():
-    global tile_sequence, current_position, grid
+    global tile_sequence, current_position, grid, attempt_count
+    attempt_count += 1  # Increment attempt count each time the game is reset
     tile_sequence = initial_tiles[:]  # copy the initial list
     random.shuffle(tile_sequence)  # randomize tile order
     grid = [['' for _ in range(grid_size)] for _ in range(grid_size)]
@@ -20,6 +22,9 @@ def shuffle_tiles():
     for i in range(grid_size):
         for j in range(grid_size):
             buttons[i][j].config(text="", state="normal")
+    
+    # Update the attempt count display
+    update_attempt_count()
 
 # Function to check if placing a tile at the current position is valid
 def is_valid_placement(row, col, tile):
@@ -66,10 +71,14 @@ def place_next_tile():
     else:
         messagebox.showinfo("End of Game", "All tiles have been placed.")
 
+# Function to update the attempt count display
+def update_attempt_count():
+    attempt_count_label.config(text=f"Attempts: {attempt_count}")
+
 # Initialize the main window
 root = tk.Tk()
 root.title("FOX Puzzle Game")
-root.geometry("400x500")
+root.geometry("400x550")
 
 # Create a grid of buttons
 buttons = []
@@ -88,6 +97,10 @@ place_button.grid(row=grid_size, column=0, columnspan=grid_size, pady=10)
 # Reset button
 reset_button = tk.Button(root, text="Reset Game", font=("Arial", 14), command=shuffle_tiles)
 reset_button.grid(row=grid_size + 1, column=0, columnspan=grid_size, pady=10)
+
+# Attempt count label
+attempt_count_label = tk.Label(root, text=f"Attempts: {attempt_count}", font=("Arial", 12))
+attempt_count_label.grid(row=grid_size + 2, column=0, columnspan=grid_size, pady=10)
 
 # Start the first game
 shuffle_tiles()
