@@ -45,9 +45,9 @@ Given a 4x4 grid, there are 16 tiles, and we have:
 
 The number of unique arrangements of these 16 tiles is given by the multinomial coefficient:
 
-\[
+$$
 \frac{16!}{5! \cdot 6! \cdot 5!} = \frac{20922789888000}{120 \cdot 720 \cdot 120} = 201801600
-\]
+$$
 
 So, there are 201,801,600 unique ways to arrange the tiles without considering the "FOX" constraint.
 
