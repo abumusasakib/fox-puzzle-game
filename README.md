@@ -8,6 +8,8 @@ This project contains the following files and directories:
 
 ```text
 .
+├── fox_puzzle_game_random_anywhere.py
+├── README.md
 ├── fox_game_rules.md
 ├── fox_puzzle_game_choose_own_tile.py
 ├── fox_puzzle_game_random.py
@@ -31,6 +33,10 @@ This script allows players to choose their own tiles to place on the grid. It in
 ### `fox_puzzle_game_random.py`
 
 This script allows players to automatically place tiles on the grid in a randomized order. The grid is updated after each move, and the game will check for invalid patterns that would create "FOX" or "XOF".
+
+### `fox_puzzle_game_random_anywhere.py`
+
+This script allows players to place random tiles on the grid anywhere on the board. The game will check for invalid patterns that would create "FOX" or "XOF", and if so then the game is over and the board is shuffled.
 
 ### `solver_and_analyzer/`
 
