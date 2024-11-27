@@ -8,11 +8,12 @@ This project contains the following files and directories:
 
 ```text
 .
-├── fox_puzzle_game_random_anywhere.py
+├── fox_puzzle_game.py
 ├── README.md
 ├── fox_game_rules.md
 ├── fox_puzzle_game_choose_own_tile.py
 ├── fox_puzzle_game_random.py
+├── fox_puzzle_game_random_anywhere.py
 └── solver_and_analyzer
     ├── fox_game_solver.py
     ├── guided_backtracking_approach.py
@@ -36,7 +37,11 @@ This script allows players to automatically place tiles on the grid in a randomi
 
 ### `fox_puzzle_game_random_anywhere.py`
 
-This script allows players to place random tiles on the grid anywhere on the board. The game will check for invalid patterns that would create "FOX" or "XOF", and if so then the game is over and the board is shuffled.
+This script allows players to place random tiles on the grid anywhere on the board. The game will check for invalid patterns that would create "FOX" or "XOF", and if so, the game ends, and the board is shuffled.
+
+### `fox_puzzle_game.py`
+
+This is the main entry point for running the FOX Puzzle game. It integrates the different gameplay modes and scripts into a unified interface for both manual and randomized tile placement.
 
 ### `solver_and_analyzer/`
 
@@ -64,7 +69,7 @@ This script attempts to solve the puzzle without using backtracking. Instead, it
 
 2. **Tile Placement Rules**: Place the tiles onto the grid in such a way that no row, column, or diagonal forms the forbidden patterns "FOX" or "XOF".
 
-3. **Game Completion**: The game ends when all tiles are placed correctly, or if an invalid move occurs. If the latter happens, the game will inform you that the move is invalid and you will have to reset the game.
+3. **Game Completion**: The game ends when all tiles are placed correctly, or if an invalid move occurs. If the latter happens, the game will inform you that the move is invalid, and you will have to reset the game.
 
 4. **Attempts**: Every time you reset the game, the attempt count will increase, allowing you to track your progress.
 
@@ -96,6 +101,18 @@ The `solver_and_analyzer/` directory contains several scripts that aim to solve 
      python fox_puzzle_game_random.py
      ```
 
+   - To play the game with random tiles placed anywhere on the grid, run:
+
+     ```bash
+     python fox_puzzle_game_random_anywhere.py
+     ```
+
+   - To run the main entry point for the game, run:
+
+     ```bash
+     python fox_puzzle_game.py
+     ```
+
 2. **Use Solver**:
    - To use the game solver with backtracking, run:
 
@@ -114,3 +131,7 @@ The `solver_and_analyzer/` directory contains several scripts that aim to solve 
      ```bash
      python solver_and_analyzer/no_backtracking.py
      ```
+
+---
+
+This README now reflects the updated folder structure and includes all necessary changes based on the new file locations and functionality.
