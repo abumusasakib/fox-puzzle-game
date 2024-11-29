@@ -1,137 +1,144 @@
-# FOX Puzzle Game
+# Fox Puzzle Game
 
-The FOX Puzzle Game is a fun and challenging puzzle game where players place tiles marked with 'F', 'O', and 'X' onto a grid, following specific placement rules. The objective is to fill the grid without creating the forbidden patterns "FOX" or "XOF" in any direction (horizontal, vertical, or diagonal).
+This project implements the **Fox Puzzle Game**. The puzzle consists of a 4x4 grid, where tiles labeled "F", "O", and "X" need to be placed in such a way that no forbidden patterns ("FOX" or "XOF") appear in any row, column, or diagonal. The project includes multiple solving approaches and tools to analyze solutions.
 
-This project contains the following files and directories:
-
-## Folder Structure
+## Project Structure
 
 ```text
 .
-├── fox_puzzle_game.py
-├── README.md
-├── fox_game_rules.md
-├── fox_puzzle_game_choose_own_tile.py
-├── fox_puzzle_game_random.py
-├── fox_puzzle_game_random_anywhere.py
-└── solver_and_analyzer
-    ├── fox_game_solver.py
-    ├── guided_backtracking_approach.py
-    ├── monte_carlo_simulation.py
-    └── no_backtracking.py
+├── solver_and_analyzer
+│   ├── backtracking_approach.py        # Solver using backtracking technique.
+│   ├── board_config.txt               # Input file containing the initial puzzle configuration.
+│   ├── random_board_generator.py      # Generates random initial grid configurations for the puzzle.
+│   ├── guided_backtracking_approach.py # Guided backtracking solver to fill the grid.
+│   ├── monte_carlo_simulation.py      # Monte Carlo simulation-based solver for the puzzle.
+│   └── no_backtracking.py             # Solver that places tiles sequentially without backtracking.
+├── README.md                         # Project overview and documentation.
+├── fox_game_rules.md                 # Detailed explanation of the Fox Puzzle Game rules.
+├── fox_puzzle_game.py                # Main script to play the Fox Puzzle Game.
+├── fox_puzzle_game_choose_own_tile.py # Variation where the player chooses their own tiles.
+├── fox_puzzle_game_random.py         # Variation with random tile placement.
+└── fox_puzzle_game_random_anywhere.py # Variation where random tiles can be placed anywhere.
 ```
 
-## Files Overview
+## Overview
 
-### `fox_game_rules.md`
+The **Fox Puzzle Game** is a logic puzzle where the goal is to fill a 4x4 grid with the tiles labeled "F", "O", and "X" according to the following rules:
 
-This file contains the detailed rules of the FOX Puzzle Game, explaining how the game is played and the logic behind tile placements.
+- Tiles must be placed in such a way that no "FOX" or "XOF" patterns appear in any row, column, or diagonal.
 
-### `fox_puzzle_game_choose_own_tile.py`
+## Solvers and Scripts
 
-This script allows players to choose their own tiles to place on the grid. It includes the basic logic for tile placement, validation, and grid updates.
+The project includes several solvers and tools for analyzing and solving the puzzle.
 
-### `fox_puzzle_game_random.py`
+### Solver Approaches
 
-This script allows players to automatically place tiles on the grid in a randomized order. The grid is updated after each move, and the game will check for invalid patterns that would create "FOX" or "XOF".
+1. **Backtracking Approach** (`backtracking_approach.py`):
+   - This is a depth-first search-based approach to solving the puzzle. It tries placing tiles one by one and uses backtracking when it encounters an invalid configuration.
 
-### `fox_puzzle_game_random_anywhere.py`
+2. **Guided Backtracking Approach** (`guided_backtracking_approach.py`):
+   - An improvement over the basic backtracking approach. It places tiles in a specific order (prioritizing 'O' first) and ensures the "FOX" and "XOF" patterns are avoided using a more directed strategy.
 
-This script allows players to place random tiles on the grid anywhere on the board. The game will check for invalid patterns that would create "FOX" or "XOF", and if so, the game ends, and the board is shuffled.
+3. **Monte Carlo Simulation** (`monte_carlo_simulation.py`):
+   - This solver uses random simulations to attempt to find a valid configuration by placing tiles randomly and checking the validity of the configuration.
 
-### `fox_puzzle_game.py`
+4. **No Backtracking Approach** (`no_backtracking.py`):
+   - This solver places tiles sequentially in empty spaces. It tries to prioritize 'O', then 'F', then 'X'. If a tile cannot be placed in a cell, it returns a failure.
 
-This is the main entry point for running the FOX Puzzle game. It integrates the different gameplay modes and scripts into a unified interface for both manual and randomized tile placement.
+### Other Files
 
-### `solver_and_analyzer/`
+- **`board_config.txt`**: A text file containing the initial configuration of the board. Empty cells are represented by `_`, and pre-placed tiles are represented by 'F', 'O', or 'X'. This file is used as input for the solvers.
+- **`random_board_generator.py`**: Generates random valid initial configurations for the puzzle. This can be used to test the solvers with different starting grids.
+- **`fox_game_rules.md`**: Provides a detailed description of the rules of the Fox Puzzle Game.
+- **`fox_puzzle_game.py`**: Main script to play the game interactively, allowing users to place tiles and try to solve the puzzle manually.
+- **`fox_puzzle_game_choose_own_tile.py`**: A variation of the main game where players can choose the tile to place on the grid.
+- **`fox_puzzle_game_random.py`**: A variation of the main game where tiles are placed randomly on the grid.
+- **`fox_puzzle_game_random_anywhere.py`**: A variation of the main game where tiles can be placed anywhere on the board randomly.
 
-This directory contains various scripts for solving and analyzing the FOX Puzzle game, including different approaches to tile placement.
+## Usage
 
-#### `fox_game_solver.py`
+To solve a puzzle using one of the solvers:
 
-This script provides a solver that attempts to find valid solutions to the FOX Puzzle game. It's the main entry point for solving the puzzle automatically.
+1. **Prepare the board configuration**:
+   - Create or edit the `board_config.txt` file to provide an initial configuration of the board.
 
-#### `guided_backtracking_approach.py`
-
-This script implements a guided backtracking approach to solve the puzzle. It explores potential moves and backtracks if a solution is invalid, ultimately finding a valid solution or determining that it's unsolvable.
-
-#### `monte_carlo_simulation.py`
-
-This script uses Monte Carlo simulations to analyze the puzzle and find solutions through random sampling and statistical methods. It provides an insight about the solution space of the puzzle.
-
-#### `no_backtracking.py`
-
-This script attempts to solve the puzzle without using backtracking. Instead, it uses a more straightforward approach, focusing on immediate valid placements.
-
-## How to Play
-
-1. **Choose a Tile**: You can either manually choose which tile ('F', 'O', or 'X') to place on the grid or use the randomized script to shuffle the tiles for you.
-
-2. **Tile Placement Rules**: Place the tiles onto the grid in such a way that no row, column, or diagonal forms the forbidden patterns "FOX" or "XOF".
-
-3. **Game Completion**: The game ends when all tiles are placed correctly, or if an invalid move occurs. If the latter happens, the game will inform you that the move is invalid, and you will have to reset the game.
-
-4. **Attempts**: Every time you reset the game, the attempt count will increase, allowing you to track your progress.
-
-## Solving the Puzzle
-
-The `solver_and_analyzer/` directory contains several scripts that aim to solve the puzzle automatically.
-
-- **Backtracking Approach**: Use `guided_backtracking_approach.py` to attempt solving with backtracking.
-- **Monte Carlo Simulation**: Use `monte_carlo_simulation.py` to explore the solution space of the puzzle.
-- **No Backtracking**: Try the straightforward approach in `no_backtracking.py` if you want a solution without backtracking.
-
-## Requirements
-
-- Python 3.x
-- Tkinter for the GUI (it should be installed by default with Python)
-
-## How to Run
-
-1. **Run the Game**:
-   - To play the game with manual tile selection, run:
+2. **Run the solver**:
+   - For backtracking, run:
 
      ```bash
-     python fox_puzzle_game_choose_own_tile.py
+     python solver_and_analyzer/backtracking_approach.py
      ```
 
-   - To play the game with randomized tile placement, run:
-
-     ```bash
-     python fox_puzzle_game_random.py
-     ```
-
-   - To play the game with random tiles placed anywhere on the grid, run:
-
-     ```bash
-     python fox_puzzle_game_random_anywhere.py
-     ```
-
-   - To run the main entry point for the game, run:
-
-     ```bash
-     python fox_puzzle_game.py
-     ```
-
-2. **Use Solver**:
-   - To use the game solver with backtracking, run:
+   - For guided backtracking, run:
 
      ```bash
      python solver_and_analyzer/guided_backtracking_approach.py
      ```
 
-   - To see the solution space using Monte Carlo simulations, run:
+   - For Monte Carlo simulation, run:
 
      ```bash
      python solver_and_analyzer/monte_carlo_simulation.py
      ```
 
-   - To solve without backtracking, run:
+   - For the no-backtracking approach, run:
 
      ```bash
      python solver_and_analyzer/no_backtracking.py
      ```
 
----
+3. **Random Board Generation**:
+   - To generate a random board configuration for testing, run:
 
-This README now reflects the updated folder structure and includes all necessary changes based on the new file locations and functionality.
+     ```bash
+     python solver_and_analyzer/random_board_generator.py
+     ```
+
+## Example
+
+### Example `board_config.txt`
+
+```txt
+_ X _ O
+O X _ X
+_ F F F
+X F _ O
+```
+
+### Example of Running a Solver
+
+```bash
+python solver_and_analyzer/backtracking_approach.py
+```
+
+**Output (if a solution is found)**:
+
+```txt
+Initial Grid:
+_ X _ O
+O X _ X
+_ F F F
+X F _ O
+
+Solved Grid:
+F X O O
+O X O X
+O F F F
+X F X O
+```
+
+If the configuration is unsolvable, the solver will output:
+
+```txt
+No valid configuration found.
+```
+
+## Contributing
+
+Feel free to contribute by adding more solving algorithms or improving the existing ones. To contribute:
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a pull request.

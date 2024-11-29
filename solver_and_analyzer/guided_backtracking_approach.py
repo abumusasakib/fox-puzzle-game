@@ -1,65 +1,108 @@
 import copy
 
-# Initialize tile counts
+# Initialize tile counts (must match the total number of tiles needed)
 remaining_tiles = {'F': 5, 'O': 6, 'X': 5}
+
+# Function to read the grid from the file
+def create_grid_from_file(file_path):
+    """
+    Reads a 4x4 board configuration from a file and returns it as a 2D list.
+    """
+    grid = []
+    try:
+        with open(file_path, "r") as file:
+            for line in file:
+                grid.append(line.strip().split())
+        if len(grid) != 4 or any(len(row) != 4 for row in grid):
+            raise ValueError("The grid must be a 4x4 configuration.")
+        return grid
+    except Exception as e:
+        print(f"Error reading grid: {e}")
+        return None
+
+# Function to check if the current grid is valid
+def is_valid(grid):
+    """
+    Checks if placing any tile on the current grid violates the "FOX" or "XOF" patterns
+    in any row, column, or diagonal.
+    """
+    # Check rows, columns, and diagonals for invalid patterns "FOX" or "XOF"
+    for i in range(4):
+        # Check rows and columns
+        row = "".join(grid[i])
+        col = "".join([grid[j][i] for j in range(4)])
+        if "FOX" in row or "XOF" in row or "FOX" in col or "XOF" in col:
+            return False
+
+    # Check diagonals
+    diag1 = "".join([grid[i][i] for i in range(4)])
+    diag2 = "".join([grid[i][3-i] for i in range(4)])
+    if "FOX" in diag1 or "XOF" in diag1 or "FOX" in diag2 or "XOF" in diag2:
+        return False
+
+    # Check 2x2 subgrids
+    for i in range(3):
+        for j in range(3):
+            subgrid = "".join([grid[i][j], grid[i][j+1], grid[i+1][j], grid[i+1][j+1]])
+            if "FOX" in subgrid or "XOF" in subgrid:
+                return False
+
+    return True
 
 # Backtracking function to attempt filling the grid
 def solve(grid, row, col):
-    # Check if we are done
+    # Check if we are done (end of the grid)
     if row == 4:
         return grid
 
-    # Move to next row if we reach the end of a row
+    # Move to the next row if we reach the end of a column
     if col == 4:
         return solve(grid, row + 1, 0)
+
+    # If the cell is already filled, move to the next cell
+    if grid[row][col] != '_':
+        return solve(grid, row, col + 1)
 
     # Try placing each tile
     for tile in 'FOX':
         if remaining_tiles[tile] > 0:
-            # Place tile and decrease its count
+            # Place the tile and decrease its count
             grid[row][col] = tile
             remaining_tiles[tile] -= 1
 
             # Check if this placement is valid
-            if is_valid(grid, row, col):
+            if is_valid(grid):
                 # Recursive call to place the next tile
                 result = solve(grid, row, col + 1)
                 if result:
                     return result  # Valid solution found
 
-            # Backtrack: remove tile and restore its count
-            grid[row][col] = ''
+            # Backtrack: Remove the tile and restore its count
+            grid[row][col] = '_'
             remaining_tiles[tile] += 1
 
     return None  # No valid solution found
 
-# Function to check if placing the tile at (row, col) is valid
-def is_valid(grid, row, col):
-    # Check for "FOX" and "XOF" patterns in rows, columns, and diagonals
-    directions = [
-        [(0, 1), (0, 2)], [(1, 0), (2, 0)],  # Right and Down
-        [(1, 1), (2, 2)], [(1, -1), (2, -2)] # Diagonals
-    ]
-    for dr, dc in directions:
-        if check_pattern(grid, row, col, dr, dc, 'FOX') or check_pattern(grid, row, col, dr, dc, 'XOF'):
-            return False
-    return True
+# Main function to solve the puzzle
+def main():
+    input_file = "board_config.txt"  # Input file name
+    grid = create_grid_from_file(input_file)
+    if grid is None:
+        return
 
-# Helper function to check patterns in a given direction
-def check_pattern(grid, row, col, dr, dc, pattern):
-    for i, (r, c) in enumerate([(0, 0), dr, dc]):
-        nr, nc = row + r, col + c
-        if not (0 <= nr < 4 and 0 <= nc < 4) or grid[nr][nc] != pattern[i]:
-            return False
-    return True
-
-# Initialize empty grid and solve
-empty_grid = [['' for _ in range(4)] for _ in range(4)]
-solution = solve(empty_grid, 0, 0)
-
-# Display solution
-if solution:
-    for row in solution:
+    print("Initial Grid:")
+    for row in grid:
         print(" ".join(row))
-else:
-    print("No solution found.")
+
+    # Solve the puzzle using backtracking
+    solution = solve(grid, 0, 0)
+
+    if solution:
+        print("\nSolved Grid:")
+        for row in solution:
+            print(" ".join(row))
+    else:
+        print("\nNo solution found.")
+
+if __name__ == "__main__":
+    main()
