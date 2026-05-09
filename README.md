@@ -12,10 +12,12 @@ This project implements the **Fox Puzzle Game**. The puzzle consists of a 4x4 gr
 │   ├── random_board_generator.py      # Generates random initial grid configurations for the puzzle.
 │   ├── guided_backtracking_approach.py # Guided backtracking solver to fill the grid.
 │   ├── monte_carlo_simulation.py      # Monte Carlo simulation-based solver for the puzzle.
-│   └── no_backtracking.py             # Solver that places tiles sequentially without backtracking.
+│   ├── no_backtracking.py             # Solver that places tiles sequentially without backtracking.
+│   ├── csp_solver.py                  # Formal CSP solver using MRV and Forward Checking.
 ├── README.md                         # Project overview and documentation.
 ├── fox_game_rules.md                 # Detailed explanation of the Fox Puzzle Game rules.
 ├── fox_puzzle_game.py                # Main script to play the Fox Puzzle Game.
+├── adversarial_fox_game.py             # Competitive version with Alpha-Beta AI.
 ├── fox_puzzle_game_choose_own_tile.py # Variation where the player chooses their own tiles.
 ├── fox_puzzle_game_random.py         # Variation with random tile placement.
 └── fox_puzzle_game_random_anywhere.py # Variation where random tiles can be placed anywhere.
@@ -26,6 +28,29 @@ This project implements the **Fox Puzzle Game**. The puzzle consists of a 4x4 gr
 The **Fox Puzzle Game** is a logic puzzle where the goal is to fill a 4x4 grid with the tiles labeled "F", "O", and "X" according to the following rules:
 
 - Tiles must be placed in such a way that no "FOX" or "XOF" patterns appear in any row, column, or diagonal.
+
+## Game Classification
+
+Based on the principles of **Adversarial Search** and **Constraint Satisfaction**, the project components are classified as follows:
+
+### 1. Fox Puzzle (Single-Player)
+
+- **Type**: Constraint Satisfaction Problem (CSP).
+- **Classification**:
+  - **Deterministic**: Outcomes are fixed based on tile placement.
+  - **Sequential**: Tiles are placed one at a time.
+  - **Perfect Information**: The entire board state is always visible.
+- **Goal**: Find a **complete and consistent assignment** of 16 tiles that satisfies all "FOX-avoidance" and "Global Count" constraints.
+
+### 2. Competitive Fox Game (Two-Player)
+
+- **Type**: Zero-Sum Sequential Game.
+- **Classification**:
+  - **Competitive/Zero-Sum**: One player's win is the other's loss.
+  - **Sequential**: Players take turns placing tiles.
+  - **Perfect Information**: No hidden information; both players see the grid and remaining tiles.
+  - **Deterministic**: No random elements (like dice) influence the rules.
+- **Goal**: Use **Minimax** search with **Alpha-Beta Pruning** to avoid completing a "FOX" while maneuvering the opponent into a losing state.
 
 ## Solvers and Scripts
 
