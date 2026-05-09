@@ -1,3 +1,4 @@
+import os
 import copy
 
 class FoxCSP:
@@ -120,7 +121,11 @@ def print_grid(assignment):
         print(" ".join(row))
 
 def main():
-    grid = load_grid("board_config.txt")
+    # Get the directory where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    config_path = os.path.join(script_dir, "board_config.txt")
+    
+    grid = load_grid(config_path)
     print("Initial Grid:")
     for row in grid:
         print(" ".join(row))
